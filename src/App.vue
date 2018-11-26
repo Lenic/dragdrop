@@ -18,11 +18,21 @@
         </div>
       </el-tooltip>
     </div>
+    <div>
+      <button>轨迹回放</button>
+    </div>
+    <div class="track">
+      <transition name="trackPoint"
+        @before-enter="beforeEnterHandler">
+
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
 import interact from 'interactjs';
+import Velocity from 'velocity-animate';
 
 export default {
   name: 'app',
@@ -64,6 +74,17 @@ export default {
           self.nodes.find(v => v.id === target.getAttribute('data-id')).position = { x, y };
         }
       })
+    },
+    moveIt(id, newPosition) {
+      const node = this.nodes.find(v => v.id === id);
+      if (!node) {
+        return;
+      }
+
+      node.position = {
+        x: newPosition.x,
+        y: newPosition.y,
+      };
     }
   }
 }
